@@ -23,8 +23,26 @@ public class Program
         planeList.Add(new Plane(3, "A", 23.11));
         planeList.Add(new Plane(2, "B", 64.74));
 
+        for (int i = 0; i < planeList.Length; i++)
+        {
+            Console.WriteLine(planeList[i]);
+        }
+
+
+
+        for (int i = 0; i < planeList.Length; i++)
+        {
+            Console.WriteLine(planeList[i]);
+        }
         planeList.Sort(new NameComparer());
         
+
+        for (int i = 0; i < planeList.Length; i++)
+        {
+            Console.WriteLine(planeList.Length);
+            Console.WriteLine(planeList[i]);
+        }
+
     }
 }
 
@@ -51,15 +69,22 @@ class Plane
     }
 }
 
-class NameComparer : IComparer
+class NameComparer : Comparer<Plane>
 {
-    int IComparer.Compare(object x, object y)
+    public override int Compare(Plane x, Plane y)
     {
-        Plane plane1 = (Plane)x;
-        Plane plane2 = (Plane)y;
-        return String.Compare(plane1.ShortName, plane2.ShortName);
+        return String.Compare(x.ShortName, y.ShortName);
     }
 }
+//}class NameComparer : Comparer<Plane>
+//{
+//    int IComparer.Compare(object x, object y)
+//    {
+//        Plane plane1 = (Plane)x;
+//        Plane plane2 = (Plane)y;
+//        return String.Compare(x.ShortName, y.ShortName);
+//    }
+//}
 
 // -------------------- List Implementation -----------------------
 //class CustomCollection<T>
