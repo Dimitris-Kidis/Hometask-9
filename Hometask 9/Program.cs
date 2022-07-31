@@ -2,11 +2,11 @@
 // Hometask #9
 
 // 1. Create a generic collection class using Array or List ✅
-// *. Add, Remove, Contains, IsEmpty, Length ✅
+// *. Add, Remove, Contains, Length ✅
 // 2. Get item at given index ✅
 // 3. Set item at given index ✅
-// 4. Swap Method ✅
-// 4. Add a comparer ✅
+// 4. Swap Method: by index and by value ✅
+// 5. Add a comparer ✅
 
 using System;
 using System.Collections;
@@ -19,30 +19,34 @@ public class Program
     {
         var planeList = new CustomCollection<Plane>();
 
-        planeList.Add(new Plane(1, "C", 46.24));
-        planeList.Add(new Plane(3, "A", 23.11));
-        planeList.Add(new Plane(2, "B", 64.74));
+        var a = new Plane(1, "C", 46.24);
+        var b = new Plane(3, "A", 23.11);
+        var c = new Plane(2, "B", 64.74);
 
+        planeList.Add(a);
+        planeList.Add(b);
+        planeList.Add(c);
+
+        Console.WriteLine(planeList.Cointains(new Plane(5, "F", 54.24)));
+
+        for (int i = 0; i < planeList.Length; i++)
+        {
+            Console.WriteLine(planeList[i]);
+        }
+        //planeList.Sort(new NameComparer());
+
+
+        planeList.Swap(a, b);
         for (int i = 0; i < planeList.Length; i++)
         {
             Console.WriteLine(planeList[i]);
         }
 
 
-
-        for (int i = 0; i < planeList.Length; i++)
-        {
-            Console.WriteLine(planeList[i]);
-        }
-        planeList.Sort(new NameComparer());
+        
         
 
-        for (int i = 0; i < planeList.Length; i++)
-        {
-            Console.WriteLine(planeList.Length);
-            Console.WriteLine(planeList[i]);
-        }
-
+        
     }
 }
 
@@ -76,6 +80,8 @@ class NameComparer : Comparer<Plane>
         return String.Compare(x.ShortName, y.ShortName);
     }
 }
+
+
 //}class NameComparer : Comparer<Plane>
 //{
 //    int IComparer.Compare(object x, object y)
@@ -233,6 +239,16 @@ class CustomCollection<T>
         Array.Copy(arr, index + 1, arr, index, SIZE - index);
         arr[SIZE] = default(T);
     }
+
+    public void Swap(T a, T b)
+    {
+        int first = Array.IndexOf(arr, a);
+        int second = Array.IndexOf(arr, b);
+        T temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+
     public void Swap(int indexFirst, int indexSecond)
     {
         T temp = arr[indexFirst];
@@ -240,9 +256,9 @@ class CustomCollection<T>
         arr[indexSecond] = temp;
     }
 
-    public void Sort(IComparer comparer)
+    public void Sort(IComparer<T> comparer)
     {
-        Array.Sort(arr, comparer);
+        Array.Sort<T>(arr, 0, Length, comparer);
     }
 
     private void EnsureCapacity(int min)
@@ -253,7 +269,7 @@ class CustomCollection<T>
             Capacity = newCapacity;
         }
     }
-    public int Capacity
+    private int Capacity
     {
         get
         {
