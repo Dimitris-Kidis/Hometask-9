@@ -27,7 +27,7 @@ public class Program
         planeList.Add(b);
         planeList.Add(c);
 
-        Console.WriteLine(planeList.Cointains(new Plane(5, "F", 54.24)));
+        
 
         for (int i = 0; i < planeList.Length; i++)
         {
@@ -80,6 +80,7 @@ class NameComparer : Comparer<Plane>
         return String.Compare(x.ShortName, y.ShortName);
     }
 }
+
 
 
 //}class NameComparer : Comparer<Plane>
@@ -269,7 +270,7 @@ class CustomCollection<T>
             Capacity = newCapacity;
         }
     }
-    private int Capacity
+    public int Capacity
     {
         get
         {
